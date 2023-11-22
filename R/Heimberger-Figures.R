@@ -205,7 +205,8 @@ ggsave(
 # Figure 6 --------
 fig6_data <- fread(here("data/Heimberger/Figure6-bookchapter.csv")) %>% 
   as_tibble() %>% 
-  pivot_longer(cols = -"ccode", names_to = "kind", values_to = "value")
+  pivot_longer(cols = -"ccode", names_to = "kind", values_to = "value") %>% 
+  dplyr::mutate(kind=ifelse(kind=="tax", "Tax", "Spending"))
 
 fig6 <- fig6_data %>% 
   dplyr::mutate(

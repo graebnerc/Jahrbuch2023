@@ -33,8 +33,8 @@ fig2n_data <- rbind(fig2n_data_eu, fig2n_data_ita, fig2n_data_south) %>%
   ))
 
 fig2 <- ggplot(data = fig2n_data, 
-       aes(x=year, y=value, fill=Region, color=Region)
-       ) +
+               aes(x=year, y=value, fill=Region, color=Region)
+) +
   geom_line(key_glyph=draw_key_rect) + geom_point() +
   scale_y_continuous(labels = percent_format(scale = 1)) +
   scale_x_continuous(breaks = c(2004, 2008, 2021)) +
@@ -44,7 +44,7 @@ fig2 <- ggplot(data = fig2n_data,
        caption = paste0(
          "Source: Authors' elaboration based on Eurostat and Istat data.\n",
          "Note: Youth unemployment refers to population 15-29 years; \nthe remaining indicators to population 15 to 64 years.")
-       ) +
+  ) +
   theme_jahrbuch +
   theme(
     strip.background = element_rect(fill = "white", colour = "white"),
@@ -69,7 +69,7 @@ head(fig2_data)
 fig2_a <- fig2_data %>% 
   filter(Kind == "Value Added") %>% 
   ggplot(
-  data = ., aes(x=year, y=value, color=Region)
+    data = ., aes(x=year, y=value, color=Region)
   ) +
   geom_line(key_glyph = draw_key_rect) + geom_point(size=0.75, alpha=0.5) +
   scale_color_euf(palette = "mixed") +
@@ -81,7 +81,7 @@ fig2_a <- fig2_data %>%
     axis.title.y = element_blank()# ,
     # strip.background = element_rect(fill = "white", color = "white"),
     # strip.text = element_text(face = "bold", size = 10)
-    )
+  )
 fig2_a
 
 fig2_b <- fig2_data %>% 
@@ -145,7 +145,7 @@ f3_a <- fig3_data %>%
   scale_y_continuous(
     labels = scales::label_percent(scale = 1), 
     expand = expansion(add = c(0, 2))
-    ) +
+  ) +
   coord_flip() +
   scale_fill_euf(palette = "mixed", aesthetics=c("fill", "color"), discrete = TRUE) +
   theme_jahrbuch +
@@ -164,7 +164,7 @@ f3_b <- fig3_data %>%
   scale_fill_euf(palette = "mixed", aesthetics=c("fill", "color"), discrete = TRUE) +
   theme_jahrbuch +
   theme(axis.title.x = element_blank(), axis.title.y = element_blank())
-  
+
 fig3 <- ggarrange(
   f3_a, f3_b, ncol = 2,
   common.legend = TRUE, 
@@ -214,7 +214,7 @@ fig4_data <- read_xlsx(here("data/ReljicCirillo/Figure 4a and 4b.xlsx")) %>%
     region_group = ordered(region_group, levels=c("Central", "Northeast","Northwest", "South")),
     Group=ordered(Group, levels=c("Managers", "Clerks", "Crafts", "Manual workers", "Total EMP"))
   )
-  
+
 fig4_data_bar <- dplyr::filter(fig4_data, Kind == "cagr", Group!="Total EMP") %>% 
   dplyr::mutate(Group=ordered(
     Group, levels = c("Managers", "Clerks", "Crafts", "Manual workers")))
@@ -227,11 +227,11 @@ fig4_a <- ggplot() +
     data = fig4_data_bar, 
     mapping = aes(x=region_group, y=value, fill=Group), 
     color=NA, stat = "identity", position = position_dodge2()
-    ) + 
+  ) + 
   geom_line(
     data=fig4_data_line, key_glyph=draw_key_abline,
     mapping = aes(x=region_group, y=value, color=Group, group=country)
-    ) +
+  ) +
   geom_point(
     data=fig4_data_line, key_glyph=draw_key_abline,
     mapping = aes(x=region_group, y=value, color=Group)
@@ -372,7 +372,7 @@ fig7a <- fig7_data %>%
   ggrepel::geom_text_repel(
     mapping = aes(label=region_lab), seed = 123, size=2.2, 
     max.overlaps = 15, min.segment.length = 0.2, key_glyph=draw_key_rect
-    ) +
+  ) +
   scale_fill_euf(palette = "mixed", aesthetics = c("color", "fill")) +
   scale_y_continuous(labels = label_percent(scale = 1), limits = c(5, 40)) +
   scale_x_continuous(labels = label_percent(scale = 1)) +

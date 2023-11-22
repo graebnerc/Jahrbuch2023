@@ -250,7 +250,10 @@ balance_data <- readxl::read_xlsx(
     cols = -Country, 
     names_to = "Year", 
     values_to = "PrimaryBalance") %>%
-  mutate(Year=as.double(Year))
+  mutate(
+    Year=as.double(Year),
+    Country = countrycode::countrycode(
+      Country, "iso3c", "country.name"))
 
 gobbi_fig6 <- balance_data %>% 
   ggplot(
@@ -286,7 +289,10 @@ deficit_data <- readxl::read_xlsx(
     cols = -Country, 
     names_to = "Year", 
     values_to = "Deficit") %>%
-  mutate(Year=as.double(Year))
+  mutate(
+    Year=as.double(Year),
+    Country = countrycode::countrycode(
+      Country, "iso3c", "country.name"))
 
 gobbi_fig7 <- deficit_data %>% 
   ggplot(
