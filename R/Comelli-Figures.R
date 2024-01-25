@@ -51,6 +51,70 @@ ggsave(plot = fig1,
        filename = here("output/Comelli_Figure-1.pdf"), 
        width = standard_width, height = standard_heigth)
   
+
+# Figure 2 -------
+# Household debt (% GNI) in Europe (OECD data, 2022)
+fig2 <- readxl::read_xlsx(
+  path = here("data/Comelli/Figure 2.xlsx")) %>% 
+  filter(TIME==2022) %>% 
+  mutate(
+    marker = ifelse(LOCATION=="ITA", "yes", "no"),
+    country = countrycode(LOCATION, "iso3c", "country.name"), 
+    country = ifelse(is.na(country), "OECD", country)) %>% 
+  ggplot(mapping = aes(x = reorder(country, -Value), y=Value, fill=marker)) +
+  geom_bar(stat = "identity", color="white") +
+  labs(
+    y="% of GNI",
+    title = "Household debt in Europe (2022)",
+    caption = "Data: OECD.") +
+  scale_y_continuous(
+    labels = label_percent(scale = 1),
+    breaks = seq(0, 250, 50),
+    expand = expansion(add = c(0, 10))) +
+  scale_fill_euf(palette = "mixed", discrete = TRUE, reverse = TRUE) +
+  theme_jahrbuch +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(), 
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, size = 7)
+  )
+fig2
+ggsave(plot = fig2, 
+       filename = here("output/Comelli_Figure-2.pdf"), 
+       width = standard_width, height = standard_heigth)
+# Figure 3 -------
+# Household debt (% of GNI) in selected countries (OECD data)
+fig3_data <- readxl::read_xlsx(
+  path = here("data/Comelli/Figure 3.xlsx")) %>% 
+  mutate(
+    Country=countrycode(Country, "iso3c", "country.name"),
+    Country=ifelse(Country=="United Kingdom", "UK", Country)) 
+set.seed(123)
+fig3 <- fig3_data %>% 
+  ggplot(aes(x=Year, y=HHD, color=Country, group=Country)) +
+  geom_line() + geom_point() +
+  geom_label_repel(
+    data=filter(fig3_data, Year==2022),
+    mapping = aes(
+      x=Year, y=HHD, color=Country, label=Country), 
+    nudge_x = 3, show.legend = FALSE
+  ) +
+  scale_color_euf(palette = "mixed") +
+  scale_x_continuous(breaks = seq(1996, 2024, 4)) +
+  scale_y_continuous(labels = label_percent(scale = 1)) +
+  labs(y="% of GNI", 
+       title = "Household debt in selected OECD countries", 
+       caption = "Data: OECD.") +
+  guides(color = guide_legend(ncol = 6)) +
+  theme_jahrbuch +
+  theme(panel.grid.minor.y = element_blank())
+fig3
+ggsave(plot = fig3, 
+       filename = here("output/Comelli_Figure-3.pdf"), 
+       width = standard_width, height = standard_heigth)
+
+
 # Figure 4 -------- 
 # Average total welfare spending as a % GDP 1980-2021 
 # (OECD SOCX, Authors calculations)
@@ -156,6 +220,36 @@ fig6
 ggsave(plot = fig6, 
        filename = here("output/Comelli_Figure-6.pdf"), 
        width = standard_width, height = standard_heigth)
+# Figure 7 -------- 
+# Senior to prime-age wage gap
+
+
+fig7_data <- readxl::read_xlsx(
+  path = here("data/Comelli/Figure 7.xlsx")) 
+set.seed(123)
+fig7 <- fig7_data %>% 
+  ggplot(aes(x=Year, y=`Wage gap by age`, color=Country, group=Country)) +
+  geom_line() + geom_point() +
+  geom_label_repel(
+    data=filter(fig7_data, Year==2022),
+    mapping = aes(
+      x=Year, y=`Wage gap by age`, color=Country, label=Country), 
+    nudge_x = 3, show.legend = FALSE
+  ) +
+  scale_color_euf(palette = "mixed") +
+  scale_x_continuous(breaks = seq(1996, 2024, 4)) +
+  scale_y_continuous(labels = label_percent(scale = 1)) +
+  labs(y="Wage gap", 
+       title = "Senior to prime-age wage gap", 
+       caption = "Data: OECD.") +
+  guides(color = guide_legend(ncol = 6)) +
+  theme_jahrbuch +
+  theme(panel.grid.minor.y = element_blank())
+fig7
+ggsave(plot = fig7, 
+       filename = here("output/Comelli_Figure-7.pdf"), 
+       width = standard_width, height = standard_heigth)
+
 
 # Figure 8 -------- 
 # Employment-to-population ratio among women in G7 countries from 2010 to 2022, by country 
