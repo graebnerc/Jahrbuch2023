@@ -1,4 +1,4 @@
-here::i_am("R/GobbiLucarelli-Figures.R")
+here::i_am("R/Comelli-Figures.R")
 library(here)
 library(readxl)
 library(tidyr)
@@ -51,11 +51,11 @@ ggsave(plot = fig1,
        filename = here("output/Comelli_Figure-1.pdf"), 
        width = standard_width, height = standard_heigth)
   
-# Figure 2 -------- 
+# Figure 4 -------- 
 # Average total welfare spending as a % GDP 1980-2021 
 # (OECD SOCX, Authors calculations)
-fig2 <- readxl::read_xls(
-  path = here("data/Comelli/Figure 2.xls")) %>% 
+fig4 <- readxl::read_xls(
+  path = here("data/Comelli/Figure 4.xls")) %>% 
   select(c("country", "value90")) %>% 
   mutate(
     marker = ifelse(country=="ITA", "yes", "no"),
@@ -79,16 +79,16 @@ fig2 <- readxl::read_xls(
     legend.position = "none",
     axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, size = 7)
   )
-fig2
-ggsave(plot = fig2, 
-       filename = here("output/Comelli_Figure-2.pdf"), 
+fig4
+ggsave(plot = fig4, 
+       filename = here("output/Comelli_Figure-4.pdf"), 
        width = standard_width, height = standard_heigth)
 
-# Figure 3 --------  
+# Figure 5 --------  
 # Average Italian welfare spending in % of GDP vs average in all OECD countries 1980-2021 
 # (Author calculations, OECD SOCX)
-fig3 <- readxl::read_xls(
-  path = here("data/Comelli/Figure 3.xls")) %>% 
+fig5 <- readxl::read_xls(
+  path = here("data/Comelli/Figure 5.xls")) %>% 
   pivot_longer(cols = -"country", names_to = "Category"
   ) %>% 
   dplyr::filter(country%in%c("OECD", "ITA"), Category!="value90") %>% 
@@ -122,16 +122,16 @@ fig3 <- readxl::read_xls(
     panel.grid.minor.x = element_blank(), 
     legend.position = c(0.9, 0.9), legend.background = element_rect(colour = get_euf_colors("grey"))
   )
-fig3
-ggsave(plot = fig3, 
-       filename = here("output/Comelli_Figure-3.pdf"), 
+fig5
+ggsave(plot = fig5, 
+       filename = here("output/Comelli_Figure-5.pdf"), 
        width = standard_width, height = standard_heigth)
 
-# Figure 4 -------- 
+# Figure 6 -------- 
 # Incidence rate of absolute poverty in Italy from 2010 to 2020, by age groups 
 # (dati.istat.it)
-fig4 <- readxl::read_xls(
-  path = here("data/Comelli/Figure 4.xls"), skip = 2) %>% 
+fig6 <- readxl::read_xls(
+  path = here("data/Comelli/Figure 6.xls"), skip = 2) %>% 
   pivot_longer(cols = -"Group") %>% 
   ggplot(mapping = aes(x = reorder(Group, -value), y=value, fill=name)) +
   geom_bar(stat = "identity", color="white", position = position_dodge2()) +
@@ -152,17 +152,17 @@ fig4 <- readxl::read_xls(
     legend.position = c(0.85, 0.8),
     legend.background = element_rect(colour = get_euf_colors("grey"))
   )
-fig4
-ggsave(plot = fig4, 
-       filename = here("output/Comelli_Figure-4.pdf"), 
+fig6
+ggsave(plot = fig6, 
+       filename = here("output/Comelli_Figure-6.pdf"), 
        width = standard_width, height = standard_heigth)
 
-# Figure 5 -------- 
+# Figure 8 -------- 
 # Employment-to-population ratio among women in G7 countries from 2010 to 2022, by country 
 # (ILO)
 
-fig5 <- readxl::read_xls(
-  path = here("data/Comelli/Figure 5.xls")) %>% 
+fig8 <- readxl::read_xls(
+  path = here("data/Comelli/Figure 8.xls")) %>% 
   pivot_longer(cols = -Year, names_to="country") %>% 
   mutate(
     marker = ifelse(country=="Italy", "yes", "no")) %>% 
@@ -185,25 +185,25 @@ fig5 <- readxl::read_xls(
     legend.position = "none",
     axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, size = 7)
   )
-fig5
-ggsave(plot = fig5, 
-       filename = here("output/Comelli_Figure-5.pdf"), 
+fig8
+ggsave(plot = fig8, 
+       filename = here("output/Comelli_Figure-8.pdf"), 
        width = standard_width, height = standard_heigth)
 
-# Figure 6 -------- 
+# Figure 9 -------- 
 # Age-orientation index of welfare spending 
 # (Author calculations, OECD SOCX)
-fig6_data <- readxl::read_xlsx(
-  path = here("data/Comelli/Figure 6n.xlsx")) %>% 
+fig9_data <- readxl::read_xlsx(
+  path = here("data/Comelli/Figure 9.xlsx")) %>% 
   pivot_longer(cols = -time, names_to="country") %>% 
   filter(country!="Grand Total") %>% 
   mutate(time=as.double(time)) 
 
-fig6 <- fig6_data %>% 
+fig9 <- fig9_data %>% 
   ggplot(aes(x=time, y=value, color=country, group=country)) +
   geom_line() + geom_point() +
   geom_label_repel(
-    data=filter(fig6_data, time==2013), 
+    data=filter(fig9_data, time==2013), 
     mapping = aes(x=time, y=value, color=country, label=country), nudge_x = 5, show.legend = FALSE
     ) +
   scale_color_euf(palette = "mixed") +
@@ -213,8 +213,8 @@ fig6 <- fig6_data %>%
        caption = "Data: OECD SOCX; author's own calculation.") +
   guides(color = guide_legend(ncol = 6)) +
   theme_jahrbuch
-fig6
-ggsave(plot = fig6, 
-       filename = here("output/Comelli_Figure-6.pdf"), 
+fig9
+ggsave(plot = fig9, 
+       filename = here("output/Comelli_Figure-9.pdf"), 
        width = standard_width+2, height = standard_heigth+1)
 
