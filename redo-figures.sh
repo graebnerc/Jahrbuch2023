@@ -1,6 +1,8 @@
 Rscript R/CeliEtAl-Figures.R 
 rm output/CeliEtAl-Figure4-Reduced.pdf
 Rscript R/CeliEtAl-Figures-SW.R 
+Rscript R/Comelli-Figures.R
+Rscript R/Comelli-Figures-SW.R
 Rscript R/Heimberger-Figures.R
 Rscript R/Heimberger-Figures-SW.R
 Rscript R/CirilloReljic-Figures.R
