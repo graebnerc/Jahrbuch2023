@@ -4,6 +4,7 @@ library(readxl)
 library(tidyr)
 library(ggrepel)
 library(dplyr)
+library(ggpubr)
 library(countrycode)
 library(ggplot2)
 library(scales)
@@ -83,6 +84,7 @@ fig2
 ggsave(plot = fig2, 
        filename = here("output/Comelli_Figure-2.pdf"), 
        width = standard_width, height = standard_heigth)
+
 # Figure 3 -------
 # Household debt (% of GNI) in selected countries (OECD data)
 fig3_data <- readxl::read_xlsx(
@@ -114,6 +116,12 @@ ggsave(plot = fig3,
        filename = here("output/Comelli_Figure-3.pdf"), 
        width = standard_width, height = standard_heigth)
 
+# Figure 2&3-------
+fig_23 <- ggpubr::ggarrange(fig2, fig3, nrow = 2, labels = c("a)", "b)"))
+
+ggsave(plot = fig_23, 
+       filename = here("output/Comelli_Figure-2-3.pdf"), 
+       width = standard_width, height = standard_heigth*2)
 
 # Figure 4 -------- 
 # Average total welfare spending as a % GDP 1980-2021 
@@ -179,7 +187,7 @@ fig5 <- readxl::read_xls(
     labels = label_percent(scale = 1),
     breaks = seq(0, 14, 2),
     expand = expansion(add = c(0, 1))) +
-  scale_fill_euf(palette = "mixed", discrete = TRUE, reverse = TRUE) +
+  scale_fill_euf(palette = "mixed", discrete = TRUE, reverse = FALSE) +
   theme_jahrbuch +
   theme(
     panel.grid.major.x = element_blank(),
@@ -190,6 +198,13 @@ fig5
 ggsave(plot = fig5, 
        filename = here("output/Comelli_Figure-5.pdf"), 
        width = standard_width, height = standard_heigth)
+
+# Figure 4&5-------
+fig_45 <- ggpubr::ggarrange(fig4, fig5, nrow = 2, labels = c("a)", "b)"))
+
+ggsave(plot = fig_45, 
+       filename = here("output/Comelli_Figure-4-5.pdf"), 
+       width = standard_width, height = standard_heigth*2)
 
 # Figure 6 -------- 
 # Incidence rate of absolute poverty in Italy from 2010 to 2020, by age groups 
@@ -250,6 +265,12 @@ ggsave(plot = fig7,
        filename = here("output/Comelli_Figure-7.pdf"), 
        width = standard_width, height = standard_heigth)
 
+# Figure 6&7-------
+fig_67 <- ggpubr::ggarrange(fig6, fig7, nrow = 2, labels = c("a)", "b)"))
+
+ggsave(plot = fig_67, 
+       filename = here("output/Comelli_Figure-6-7.pdf"), 
+       width = standard_width, height = standard_heigth*2)
 
 # Figure 8 -------- 
 # Employment-to-population ratio among women in G7 countries from 2010 to 2022, by country 
