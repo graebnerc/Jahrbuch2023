@@ -256,7 +256,7 @@ fig7 <- fig7_data %>%
   scale_y_continuous(labels = label_percent(scale = 1)) +
   labs(y="Wage gap", 
        title = "Senior to prime-age wage gap", 
-       caption = "Data: OECD.") +
+       caption = "Data: OECD.\nNote: A negative number means that seniors earn X% more than prime-age workers.") +
   guides(color = guide_legend(ncol = 6)) +
   theme_jahrbuch +
   theme(panel.grid.minor.y = element_blank())
