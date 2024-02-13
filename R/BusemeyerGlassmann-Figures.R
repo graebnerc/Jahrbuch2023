@@ -38,7 +38,7 @@ Figure_1 <- fig_1_data %>%
   labs(
     title = "Early leavers from training and education\n(2023, by NUTS-2 regions)",
     y = "Early leavers in per cent", 
-    caption = "Data: Eurostat."
+    caption = "Data: Eurostat (2023a)."
   ) +
   scale_y_continuous(
     expand = expansion(0, c(0,3)),
@@ -94,7 +94,7 @@ Figure_2 <- fig_2_data %>%
   labs(
     title = "Share of population with vocational education\n(2023, by NUTS-2 regions)",
     y = "Per cent of the population", 
-    caption = "Data: Eurostat; population comprises people aged 25-64; \nvocational education refers to upper and post-secondary, non tertiary education."
+    caption = "Data: Eurostat (2023b); population comprises people aged 25-64; \nvocational education refers to upper and post-secondary, non tertiary education."
   ) +
   scale_y_continuous(
     expand = expansion(0, c(0,3)),
@@ -153,7 +153,7 @@ Figure_3 <- fig_3_data %>%
   labs(
     title = "Enrollment rate in university education\n(2017, by NUTS-2 regions)",
     y = "Enrollment rate in per cent", 
-    caption = "Data: Istat."
+    caption = "Data: Istat (2023b)."
   ) +
   scale_y_continuous(
     expand = expansion(0, c(0,3)),
